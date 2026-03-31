@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Avent">
+  <meta name="theme-color" content="#0f0f0f">
+
+  <title>Avent Swim Club</title>
+
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/icons/icon-512.png">
+
+  <!-- DM Sans from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/src/css/tokens.css">
+  <link rel="stylesheet" href="/src/css/reset.css">
+  <link rel="stylesheet" href="/src/css/layout.css">
+  <link rel="stylesheet" href="/src/css/animations.css">
+  <link rel="stylesheet" href="/src/css/chat.css">
+  <link rel="stylesheet" href="/src/css/auth.css">
+
+  <!-- API base URL — set before app.js loads -->
+  <script>
+    window.AVENT_API_URL = '%%VITE_API_BASE_URL%%';
+  </script>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- Header -->
+  <div id="header">
+    <button id="login-btn" aria-label="Log in with USMS number">log in</button>
+  </div>
+
+  <!-- Logo -->
+  <div id="logo" aria-label="Avent Swim Club">
+    <div id="wordmark">aventswim<span>.</span>club</div>
+    <div id="logo-line" role="presentation"></div>
+  </div>
+
+  <!-- Chat scroll area -->
+  <div id="chat-scroll" role="log" aria-live="polite" aria-label="Chat messages"></div>
+
+  <!-- Input bar -->
+  <div id="input-bar-wrap">
+    <div id="input-bar">
+      <textarea
+        id="message-input"
+        rows="1"
+        placeholder="Message"
+        aria-label="Type a message"
+        autocomplete="off"
+        autocorrect="on"
+        spellcheck="true"
+      ></textarea>
+      <button id="send-btn" aria-label="Send message" disabled>↑</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Auth overlay (USMS login sheet) -->
+<div id="auth-overlay" role="dialog" aria-modal="true" aria-labelledby="auth-sheet-title">
+  <div id="auth-sheet">
+    <button id="auth-close-btn" aria-label="Close login">✕</button>
+    <h2 id="auth-sheet-title">Log in to Avent</h2>
+    <p id="auth-sheet-subtitle">Enter your USMS membership number. No password needed.</p>
+    <input
+      id="usms-input"
+      type="text"
+      inputmode="text"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="characters"
+      spellcheck="false"
+      placeholder="e.g. 1234-5678"
+      aria-label="USMS membership number"
+      maxlength="12"
+    >
+    <button id="auth-submit-btn">Continue</button>
+    <p id="auth-error" role="alert" aria-live="polite"></p>
+  </div>
+</div>
+
+<!-- Enable send button when input has text -->
+<script>
+  document.getElementById('message-input').addEventListener('input', function() {
+    document.getElementById('send-btn').disabled = !this.value.trim();
+  });
+</script>
+
+<!-- App entry point -->
+<script type="module" src="/src/js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avent Swim Club</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0f0f0f;
+      font-family: 'DM Sans', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    /* ===================== */
+    /* PHONE FRAME           */
+    /* ===================== */
+
+    .phone-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .phone {
+      width: 320px;
+      height: 640px;
+      border-radius: 44px;
+      overflow: hidden;
+      position: relative;
+      background: #0f0f0f;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* ===================== */
+    /* HEADER                */
+    /* ===================== */
+
+    .header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 52px 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      z-index: 10;
+    }
+
+    .login-btn {
+      background: #F5A623;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 7px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      transition-delay: 1s;
+      white-space: nowrap;
+    }
+
+    .login-btn.visible {
+      opacity: 1;
+    }
+
+    .login-btn:hover {
+      background: #e09415;
+    }
+
+    /* ===================== */
+    /* LOGO                  */
+    /* starts centered, slides to top */
+    /* ===================== */
+
+    .logo-wrap {
+      position: absolute;
+      left: 32px;
+      width: 66%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      transition:
+        top 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .logo-wrap.settled {
+      top: 52px;
+      transform: translateY(0);
+    }
+
+    .wordmark {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 28px;
+      color: white;
+      letter-spacing: -0.5px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .wordmark span {
+      color: #2ABFBF;
+    }
+
+    .logo-line {
+      height: 1px;
+      background: #2ABFBF;
+      width: 100%;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transition-delay: 0.1s;
+    }
+
+    .logo-line.contracted {
+      width: 24px;
+    }
+
+    /* ===================== */
+    /* CHAT                  */
+    /* fades in from bottom  */
+    /* ===================== */
+
+    .chat-area {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      transition-delay: 0.5s;
+    }
+
+    .chat-area.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .ai-bubble {
+      background: #1e1e1e;
+      color: rgba(255, 255, 255, 0.85);
+      padding: 14px 18px;
+      border-radius: 20px 20px 20px 4px;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.6;
+      max-width: 88%;
+      align-self: flex-start;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .dot {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      background: #2ABFBF;
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: middle;
+      margin-bottom: 2px;
+    }
+
+    .input-bar {
+      background: #1a1a1a;
+      border-radius: 16px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .input-text {
+      color: rgba(255, 255, 255, 0.18);
+      font-size: 13px;
+    }
+
+    .send-btn {
+      width: 30px;
+      height: 30px;
+      background: #2ABFBF;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+    }
+
+    /* ===================== */
+    /* REPLAY BUTTON         */
+    /* ===================== */
+
+    .replay {
+      background: none;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.5);
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      white-space: nowrap;
+    }
+
+    .replay:hover {
+      border-color: rgba(255, 255, 255, 0.4);
+      color: rgba(255, 255, 255, 0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="phone-container">
+    <div class="phone" id="phone">
+
+      <div class="header">
+        <button class="login-btn" id="loginBtn">log in</button>
+      </div>
+
+      <div class="logo-wrap" id="logo">
+        <div class="wordmark">aventswim<span>.</span>club</div>
+        <div class="logo-line" id="line"></div>
+      </div>
+
+      <div class="chat-area" id="chat">
+        <div class="ai-bubble">
+          <span class="dot"></span>Bonjour. Before we jump in — are you a USMS registered member?
+        </div>
+        <div class="input-bar">
+          <span class="input-text">Message</span>
+          <div class="send-btn">↑</div>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="replay" id="replay">↺ Replay</button>
+  </div>
+
+  <script>
+    function runAnimation() {
+      const logo = document.getElementById('logo');
+      const line = document.getElementById('line');
+      const chat = document.getElementById('chat');
+      const loginBtn = document.getElementById('loginBtn');
+
+      // Reset all states
+      logo.classList.remove('settled');
+      line.classList.remove('contracted');
+      chat.classList.remove('visible');
+      loginBtn.classList.remove('visible');
+
+      // Force reflow so transitions re-trigger
+      void logo.offsetWidth;
+
+      // Trigger animation after short pause
+      setTimeout(() => {
+        logo.classList.add('settled');
+        line.classList.add('contracted');
+        chat.classList.add('visible');
+        loginBtn.classList.add('visible');
+      }, 1200);
+    }
+
+    document.getElementById('replay').addEventListener('click', runAnimation);
+
+    // Auto-run on load
+    setTimeout(runAnimation, 400);
+  </script>
+
+</body>
+</html>

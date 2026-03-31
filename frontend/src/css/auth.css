@@ -1,0 +1,129 @@
+/* ── Login button (header, right-justified) ─────────────── */
+#login-btn {
+  background: var(--color-orange);
+  color: white;
+  border-radius: var(--radius-btn);
+  padding: 7px 14px;
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.5px;
+  opacity: 0;
+  transition: opacity 0.6s ease 1s, background 0.15s;
+  white-space: nowrap;
+}
+
+#login-btn.visible {
+  opacity: 1;
+}
+
+#login-btn:hover {
+  background: var(--color-orange-hover);
+}
+
+/* ── Auth modal overlay ─────────────────────────────────── */
+#auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 15, 15, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+#auth-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#auth-sheet {
+  background: var(--color-surface);
+  border-radius: 24px 24px 0 0;
+  padding: 28px 24px max(32px, env(safe-area-inset-bottom));
+  width: 100%;
+  max-width: 480px;
+  transform: translateY(24px);
+  transition: transform 0.3s var(--ease-smooth);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+#auth-overlay.open #auth-sheet {
+  transform: translateY(0);
+}
+
+#auth-sheet-title {
+  font-size: 18px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+#auth-sheet-subtitle {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+#usms-input {
+  width: 100%;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: var(--color-text);
+  font-size: 16px; /* 16px prevents iOS zoom on focus */
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+
+#usms-input:focus {
+  border-color: rgba(42, 191, 191, 0.5);
+}
+
+#usms-input::placeholder {
+  color: var(--color-text-placeholder);
+  letter-spacing: 0;
+}
+
+#auth-submit-btn {
+  width: 100%;
+  background: var(--color-teal);
+  color: white;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: var(--font-weight-medium);
+  transition: opacity 0.15s, background 0.15s;
+}
+
+#auth-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#auth-error {
+  font-size: 12px;
+  color: #ff6b6b;
+  margin-top: 8px;
+  min-height: 18px;
+}
+
+#auth-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: var(--color-text-muted);
+  font-size: 20px;
+  padding: 4px 8px;
+}
+
+#auth-sheet {
+  position: relative;
+}
